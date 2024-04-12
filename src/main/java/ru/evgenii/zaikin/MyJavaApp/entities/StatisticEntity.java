@@ -23,11 +23,11 @@ public class StatisticEntity {
 
     @ManyToOne
     @JoinColumn(name = "statistic_profession_id")
-    StatisticProfessionEntity profession;
+    ProfessionEntity profession;
 
     @ManyToOne
     @JoinColumn(name = "statistic_type_id")
-    StatisticTypeEntity type;
+    TypeEntity type;
 
     @Column(nullable = false)
     Integer value;

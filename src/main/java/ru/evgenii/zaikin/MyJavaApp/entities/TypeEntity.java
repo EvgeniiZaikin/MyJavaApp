@@ -9,13 +9,13 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="statistic-professions")
+@Table(name="types")
 @Data
-public class StatisticProfessionEntity {
+public class TypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false, unique = true)
-    String profession;
+    String type;
 }
