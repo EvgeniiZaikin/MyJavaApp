@@ -15,6 +15,11 @@ import java.util.Map;
 public class StatisticController {
     private final StatisticService statisticService;
 
+    @GetMapping("/parse/salary")
+    public ResponseEntity<Map<String, Integer>> parseSalary() {
+        return ResponseEntity.ok(statisticService.parseSalary());
+    }
+
     @GetMapping("/parse/vacancy")
     public ResponseEntity<Map<String, Integer>> parseVacancy() {
         return ResponseEntity.ok(statisticService.parseVacancy());
