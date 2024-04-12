@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.evgenii.zaikin.MyJavaApp.entities.ProfessionEntity;
 import ru.evgenii.zaikin.MyJavaApp.entities.StatisticEntity;
+import ru.evgenii.zaikin.MyJavaApp.entities.TypeEntity;
 import ru.evgenii.zaikin.MyJavaApp.modules.CareerHabrVacancyModule;
 import ru.evgenii.zaikin.MyJavaApp.modules.HeadHunterSalaryModule;
 import ru.evgenii.zaikin.MyJavaApp.modules.HeadHunterVacancyModule;
@@ -13,9 +14,11 @@ import ru.evgenii.zaikin.MyJavaApp.repositories.ProfessionRepository;
 import ru.evgenii.zaikin.MyJavaApp.repositories.StatisticRepository;
 import ru.evgenii.zaikin.MyJavaApp.repositories.TypeRepository;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,10 +40,14 @@ public class StatisticService {
         List<ProfessionEntity> professions = professionRepository.findAll();
 
         for (ProfessionEntity item : professions) {
-            Integer salary = headHunterSalaryModule.parse(item.getParseValue());
-            StatisticEntity statistic = createStatisticEntity("salary", item, salary);
-            StatisticEntity savedStatistic = statisticRepository.save(statistic);
-            result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
+            if (checkStatisticExists("salary", item.getId())) {
+                result.put(item.getTitle(), null);
+            } else {
+                Integer salary = headHunterSalaryModule.parse(item.getParseValue());
+                StatisticEntity statistic = createStatisticEntity("salary", item, salary);
+                StatisticEntity savedStatistic = statisticRepository.save(statistic);
+                result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
+            }
         }
 
         return result;
@@ -52,16 +59,20 @@ public class StatisticService {
         List<ProfessionEntity> professions = professionRepository.findAll();
 
         for (ProfessionEntity item : professions) {
-            Integer total = 0;
+            if (checkStatisticExists("salary", item.getId())) {
+                result.put(item.getTitle(), null);
+            } else {
+                Integer total = 0;
 
-            total += headHunterVacancyModule.parse(item.getParseValue());
-            total += careerHabrVacancyModule.parse(item.getParseValue());
-            total += trudVsemVacancyModule.parse(item.getParseValue());
-            total += zarplataRuVacancyModule.parse(item.getParseValue());
+                total += headHunterVacancyModule.parse(item.getParseValue());
+                total += careerHabrVacancyModule.parse(item.getParseValue());
+                total += trudVsemVacancyModule.parse(item.getParseValue());
+                total += zarplataRuVacancyModule.parse(item.getParseValue());
 
-            StatisticEntity statistic = createStatisticEntity("vacancy", item, total);
-            StatisticEntity savedStatistic = statisticRepository.save(statistic);
-            result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
+                StatisticEntity statistic = createStatisticEntity("vacancy", item, total);
+                StatisticEntity savedStatistic = statisticRepository.save(statistic);
+                result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
+            }
         }
 
         return result;
@@ -75,5 +86,18 @@ public class StatisticService {
         statistic.setValue(value);
 
         return statistic;
+    }
+
+    private boolean checkStatisticExists(String type, Long professionId) {
+        TypeEntity typeEntity = typeRepository.findByType(type).orElseThrow();
+
+        Optional<StatisticEntity> exists = statisticRepository.findStatisticBetweenDates(
+            LocalDate.now().withDayOfMonth(1),
+            LocalDate.now().withDayOfMonth(1).plusMonths(1),
+            typeEntity.getId(),
+            professionId
+        );
+
+        return exists.isPresent();
     }
 }
