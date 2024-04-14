@@ -43,10 +43,10 @@ public class StatisticService {
             if (checkStatisticExists("salary", item.getId())) {
                 result.put(item.getTitle(), null);
             } else {
-                Integer salary = headHunterSalaryModule.parse(item.getParseValue());
-                StatisticEntity statistic = createStatisticEntity("salary", item, salary);
-                StatisticEntity savedStatistic = statisticRepository.save(statistic);
-                result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
+//                Integer salary = headHunterSalaryModule.parse(item.getParseValue());
+//                StatisticEntity statistic = createStatisticEntity("salary", item, salary);
+//                StatisticEntity savedStatistic = statisticRepository.save(statistic);
+//                result.put(savedStatistic.getProfession().getTitle(), savedStatistic.getValue());
             }
         }
 
@@ -64,10 +64,10 @@ public class StatisticService {
             } else {
                 Integer total = 0;
 
-                total += headHunterVacancyModule.parse(item.getParseValue());
-                total += careerHabrVacancyModule.parse(item.getParseValue());
-                total += trudVsemVacancyModule.parse(item.getParseValue());
-                total += zarplataRuVacancyModule.parse(item.getParseValue());
+//                total += headHunterVacancyModule.parse(item.getParseValue());
+//                total += careerHabrVacancyModule.parse(item.getParseValue());
+//                total += trudVsemVacancyModule.parse(item.getParseValue());
+//                total += zarplataRuVacancyModule.parse(item.getParseValue());
 
                 StatisticEntity statistic = createStatisticEntity("vacancy", item, total);
                 StatisticEntity savedStatistic = statisticRepository.save(statistic);
