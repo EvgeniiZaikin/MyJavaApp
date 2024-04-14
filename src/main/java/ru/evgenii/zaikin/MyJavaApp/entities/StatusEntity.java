@@ -8,38 +8,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
 @Entity
-@Setter
-@Getter
-@Table(name="news")
-public class NewsEntity {
+@Data
+@Table(name="statuses")
+public class StatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="new_id")
+    @Column(name="status_id")
     Long id;
 
-    @Column(name="new_title", nullable = false)
-    String title;
-
-    @Column(name="new_url", unique = true, nullable = false)
-    String url;
-
-    @ManyToOne
-    @JoinColumn(name="new_status_id")
-    StatusEntity status;
+    @Column(name="status_value", nullable = false, unique = true)
+    String value;
 
     @CreationTimestamp
-    @Column(name="new_created_at")
+    @Column(name="status_created_at")
     Date createdAt;
 
     @UpdateTimestamp
-    @Column(name="new_updated_at")
+    @Column(name="status_updated_at")
     Date updatedAt;
 }
