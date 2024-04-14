@@ -16,6 +16,8 @@ import ru.evgenii.zaikin.MyJavaApp.repositories.StatusRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +54,22 @@ public class NewsService {
 
     public List<NewsEntity> getAllNews() {
         return newsRepository.findAll();
+    }
+
+    public List<NewsEntity> updateNewsStatuses(List<NewsEntity> news) {
+        List<StatusEntity> statuses = statusRepository.findAll();
+
+        for (NewsEntity item : news) {
+            statuses.stream()
+                .filter(elem -> Objects.equals(elem.getValue(), item.getStatus().getValue()))
+                .findFirst()
+                .ifPresent(item::setStatus);
+        }
+
+        return newsRepository.saveAll(news);
+    }
+
+    public List<NewsEntity> getNewsByStatus(String status) {
+        return newsRepository.findAllByStatusValueIs(status);
     }
 }

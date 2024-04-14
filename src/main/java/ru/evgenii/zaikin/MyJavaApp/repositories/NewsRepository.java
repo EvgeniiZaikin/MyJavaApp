@@ -5,8 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.evgenii.zaikin.MyJavaApp.entities.NewsEntity;
 
+import java.util.List;
+
 @Repository
 public interface NewsRepository extends JpaRepository<NewsEntity, Long> {
     @Query(value = "INSERT INTO news (new_title, new_url, new_status_id) VALUES (?, ?, ?) ON CONFLICT DO NOTHING RETURNING *;", nativeQuery = true)
     NewsEntity saveNewsItem(String title, String url, Long statusId);
+
+    public List<NewsEntity> findAllByStatusValueIs(String status);
 }
