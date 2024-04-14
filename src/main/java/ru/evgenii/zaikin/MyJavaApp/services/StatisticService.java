@@ -34,6 +34,12 @@ public class StatisticService {
     private final StatisticRepository statisticRepository;
     private final TypeRepository typeRepository;
 
+    public List<StatisticEntity> findStatisticByProfession(Long professionId, String type) {
+        TypeEntity typeEntity = typeRepository.findByType(type).orElseThrow();
+        ProfessionEntity profession = professionRepository.findById(professionId).orElseThrow();
+        return statisticRepository.findAllByProfessionAndTypeOrderByCreatedAtDesc(profession, typeEntity);
+    }
+
     public Map<String, Integer> parseSalary() {
         Map<String, Integer> result = new HashMap<>();
 
