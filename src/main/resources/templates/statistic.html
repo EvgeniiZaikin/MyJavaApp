@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Статистика</title>
+    <link th:href="@{/table.css}" rel="stylesheet" />
+</head>
+<body>
+<table>
+    <th:block th:each="item : ${statistic}">
+        <tr>
+            <td>[[${item.profession.title}]]</td>
+            <td>[[${item.value}]]</td>
+            <td>[[${item.type.type}]]</td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

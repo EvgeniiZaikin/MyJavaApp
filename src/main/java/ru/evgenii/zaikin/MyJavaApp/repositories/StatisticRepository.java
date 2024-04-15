@@ -7,6 +7,7 @@ import ru.evgenii.zaikin.MyJavaApp.entities.ProfessionEntity;
 import ru.evgenii.zaikin.MyJavaApp.entities.StatisticEntity;
 import ru.evgenii.zaikin.MyJavaApp.entities.TypeEntity;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +18,6 @@ public interface StatisticRepository extends JpaRepository<StatisticEntity, Long
     public Optional<StatisticEntity> findStatisticBetweenDates(LocalDate startDate, LocalDate endDate, Long typeId, Long professionId);
 
     public List<StatisticEntity> findAllByProfessionAndTypeOrderByCreatedAtDesc(ProfessionEntity profession, TypeEntity type);
+
+    public List<StatisticEntity> findAllByTypeAndCreatedAtGreaterThanEqualOrderByValueDesc(TypeEntity type, Timestamp afterDate);
 }

@@ -14,6 +14,7 @@ import ru.evgenii.zaikin.MyJavaApp.repositories.ProfessionRepository;
 import ru.evgenii.zaikin.MyJavaApp.repositories.StatisticRepository;
 import ru.evgenii.zaikin.MyJavaApp.repositories.TypeRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,12 @@ public class StatisticService {
     private final ProfessionRepository professionRepository;
     private final StatisticRepository statisticRepository;
     private final TypeRepository typeRepository;
+
+    public List<StatisticEntity> getStatisticByType(String type) {
+        TypeEntity typeEntity = typeRepository.findByType(type).orElseThrow();
+        Timestamp timestamp = Timestamp.valueOf(LocalDate.now().withDayOfMonth(1).atStartOfDay());
+        return statisticRepository.findAllByTypeAndCreatedAtGreaterThanEqualOrderByValueDesc(typeEntity, timestamp);
+    }
 
     public List<StatisticEntity> findStatisticByProfession(Long professionId, String type) {
         TypeEntity typeEntity = typeRepository.findByType(type).orElseThrow();
