@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+}
+
+tr {
+    background-color: aliceblue;
+}
+
+td {
+    padding: 16px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}

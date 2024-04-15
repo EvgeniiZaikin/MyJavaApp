@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список новостей</title>
+    <link th:href="@{/news.css}" rel="stylesheet" />
+    <script th:src="@{/news.js}"></script>
+</head>
+<body>
+<table>
+    <th:block th:each="item : ${news}">
+        <tr>
+            <td th:text="${item.id}">...</td>
+            <td><a th:href="@{${item.url}}" target="_blank">[[${item.title}]]</a></td>
+            <td><button th:onclick="updateNewsStatus([[${item.id}]], [[\'rejected\']])">Отклонить</button></td>
+            <td><button th:onclick="updateNewsStatus([[${item.id}]], [[\'ready\']])">В работу</button></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

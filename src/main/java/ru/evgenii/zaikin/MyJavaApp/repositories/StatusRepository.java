@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface StatusRepository extends JpaRepository<StatusEntity, Long> {
     @Query(value="SELECT * FROM statuses WHERE status_value = 'idle'", nativeQuery = true)
     public Optional<StatusEntity> findIdleStatus();
+
+    public Optional<StatusEntity> findStatusByValue(String status);
 }

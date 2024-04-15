@@ -69,6 +69,13 @@ public class NewsService {
         return newsRepository.saveAll(news);
     }
 
+    public NewsEntity updateNewsStatus(Long newsId, String status) {
+        StatusEntity statusEntity = statusRepository.findStatusByValue(status).orElseThrow();
+        NewsEntity newsEntity = newsRepository.findById(newsId).orElseThrow();
+        newsEntity.setStatus(statusEntity);
+        return newsRepository.save(newsEntity);
+    }
+
     public List<NewsEntity> getNewsByStatus(String status) {
         return newsRepository.findAllByStatusValueIs(status);
     }
