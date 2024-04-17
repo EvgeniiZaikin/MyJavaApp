@@ -41,7 +41,7 @@ public class StatisticService {
         return statisticRepository.findAllByTypeAndCreatedAtGreaterThanEqualOrderByValueDesc(typeEntity, timestamp);
     }
 
-    public List<StatisticEntity> findStatisticByProfession(Long professionId, String type) {
+    public List<StatisticEntity> findStatisticByProfessionAndType(Long professionId, String type) {
         TypeEntity typeEntity = typeRepository.findByType(type).orElseThrow();
         ProfessionEntity profession = professionRepository.findById(professionId).orElseThrow();
         return statisticRepository.findAllByProfessionAndTypeOrderByCreatedAtDesc(profession, typeEntity);

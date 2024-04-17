@@ -27,11 +27,14 @@ public class StatisticController {
     }
 
     @GetMapping("/{professionId}/{type}")
-    public ResponseEntity<List<StatisticEntity>> getStatisticByProfession(
+    public String getStatisticByProfessionAndType(
         @PathVariable("professionId") Long professionId,
-        @PathVariable("type") String type
+        @PathVariable("type") String type,
+        Model model
     ) {
-        return ResponseEntity.ok(statisticService.findStatisticByProfession(professionId, type));
+        List<StatisticEntity> statistic = statisticService.findStatisticByProfessionAndType(professionId, type);
+        model.addAttribute("statistic", statistic);
+        return "statistic";
     }
 
     @GetMapping("/parse/salary")

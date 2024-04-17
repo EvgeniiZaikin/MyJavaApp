@@ -8,6 +8,7 @@
     <th:block th:each="item : ${statistic}">
         <tr>
             <td>[[${item.profession.title}]]</td>
+            <td>[[${item.createdAt}]]</td>
             <td>[[${item.value}]]</td>
             <td>[[${item.type.type}]]</td>
         </tr>

@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список профессий</title>
+    <link th:href="@{/table.css}" rel="stylesheet" />
+</head>
+<body>
+<table>
+    <th:block th:each="item : ${data}">
+        <tr>
+            <td>[[${item.id}]]</td>
+            <td>[[${item.title}]]</td>
+            <td><a th:href="@{/statistic/{id}/salary(id=${item.id})}">Статистика средней зарплаты</a></td>
+            <td><a th:href="@{/statistic/{id}/vacancy(id=${item.id})}">Статистика количества вакансий</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
