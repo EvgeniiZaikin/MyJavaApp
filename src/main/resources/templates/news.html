@@ -12,6 +12,7 @@
             <td><a th:href="@{${item.url}}" target="_blank">[[${item.title}]]</a></td>
             <td><button th:onclick="updateNewsStatus([[${item.id}]], [[\'rejected\']])">Отклонить</button></td>
             <td><button th:onclick="updateNewsStatus([[${item.id}]], [[\'ready\']])">В работу</button></td>
+            <td><button th:onclick="updateNewsStatus([[${item.id}]], [[\'published\']])">Опубликовано</button></td>
         </tr>
     </th:block>
 </table>
