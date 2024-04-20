@@ -5,6 +5,7 @@
     <script th:src="@{/news.js}"></script>
 </head>
 <body>
+<button id="parse-button" th:onclick="parseNews()">Парсинг новостей</button>
 <table>
     <th:block th:each="item : ${news}">
         <tr>
